@@ -19,20 +19,6 @@ GND 핀: DHT11의 GND 핀을 라즈베리 파이의 GND 핀에 연결합니다.
 DATA 핀: DHT11의 DATA 핀을 라즈베리 파이의 **GPIO 4번 핀 (D4)**에 연결합니다.
 
 
-회로도 예시
-
-   DHT11
-   +---------+
-   |         |
-   |  VCC    |------> 3.3V (Raspberry Pi)
-   |         |
-   |  GND    |------> GND (Raspberry Pi)
-   |         |
-   |  DATA   |------> GPIO 4 (D4) (Raspberry Pi)
-   +---------+
-4. 코드 작성
-아래의 Python 코드를 사용하여 DHT11 센서로부터 온도와 습도 데이터를 읽어올 수 있습니다.
-
 
 import time
 import board
@@ -66,12 +52,11 @@ DHT11 센서에서 읽은 온도와 습도 데이터를 Node-RED로 전송하기
 Node-RED 대시보드에서 데이터를 시각화하기 위한 차트 또는 그래프 노드를 추가합니다.
 예시: MQTT를 통한 데이터 전송
 먼저 MQTT 브로커를 설정하고, paho-mqtt 라이브러리를 설치합니다:
-bash
-코드 복사
+
 pip install paho-mqtt
 다음은 데이터를 MQTT 브로커로 전송하는 방법입니다:
-python
-코드 복사
+
+
 import paho.mqtt.client as mqtt
 
 
@@ -122,23 +107,14 @@ Inject 노드: 데이터를 주기적으로 전송하는 역할
 Function 노드: 온도 및 습도 데이터를 포맷팅
 Debug 노드: 데이터 확인용
 UI Chart 노드: 시각화를 위한 차트 노드
+
+
 예시로 아래와 같은 흐름을 생성합니다:
 
 
-[Inject] --> [Function] --> [Debug]
-                              |
-                              v
-                           [UI Chart]
-노드 설정:
 
 Inject 노드: 주기를 설정하여 정기적으로 데이터를 수집하도록 합니다 (예: 2초마다).
 Function 노드: DHT11 센서로부터 수신한 데이터를 JSON 형식으로 변환하여 UI 차트에 전달합니다.
-
-msg.payload = {
-    temperature: msg.temperature,
-    humidity: msg.humidity
-};
-return msg;
 
 
 UI Chart 노드: 수신한 데이터를 차트로 시각화하도록 설정합니다.
@@ -147,7 +123,6 @@ UI Chart 노드: 수신한 데이터를 차트로 시각화하도록 설정합�
 4. 온도 및 습도 데이터 수집
 DHT11 센서에서 온도와 습도 데이터를 수집하는 코드를 사용하여 Node-RED로 데이터를 전송합니다. 이를 위해 앞서 작성한 MQTT 예제 코드나 HTTP 요청을 사용할 수 있습니다.
 
-예시: MQTT로 데이터 전송
 
 
 import paho.mqtt.client as mqtt
