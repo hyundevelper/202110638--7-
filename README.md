@@ -33,13 +33,11 @@ DATA 핀: DHT11의 DATA 핀을 라즈베리 파이의 **GPIO 4번 핀 (D4)**에 
 4. 코드 작성
 아래의 Python 코드를 사용하여 DHT11 센서로부터 온도와 습도 데이터를 읽어올 수 있습니다.
 
-python
-코드 복사
+
 import time
 import board
 import adafruit_dht
 
-# DHT11 센서 초기화 (GPIO 4번 핀 사용)
 dhtDevice = adafruit_dht.DHT11(board.D4)
 
 try:
@@ -49,10 +47,10 @@ try:
         temperature_f = temperature_c * (9 / 5) + 32  # 화씨 온도로 변환
         humidity = dhtDevice.humidity  # 습도
 
-        # 값 출력
+       
         print(f"Temp: {temperature_f:.1f}°F / {temperature_c:.1f}°C    Humidity: {humidity}%")
 
-        # 2초 대기
+ 
         time.sleep(2.0)
 
 except Exception as e:
@@ -60,6 +58,8 @@ except Exception as e:
 
 finally:
     dhtDevice.exit()
+
+    
 5. Node-RED 연동
 Node-RED를 설치하고 실행합니다.
 DHT11 센서에서 읽은 온도와 습도 데이터를 Node-RED로 전송하기 위해 MQTT나 HTTP 요청을 사용할 수 있습니다.
@@ -74,11 +74,11 @@ python
 코드 복사
 import paho.mqtt.client as mqtt
 
-# MQTT 설정
+
 broker = "mqtt.eclipse.org"  # MQTT 브로커 주소
 topic = "sensor/dht11"
 
-# MQTT 클라이언트 초기화
+
 mqtt_client = mqtt.Client()
 mqtt_client.connect(broker)
 
@@ -87,7 +87,7 @@ try:
         temperature_c = dhtDevice.temperature
         humidity = dhtDevice.humidity
 
-        # MQTT로 데이터 전송
+      
         mqtt_client.publish(topic, f"Temp: {temperature_c:.1f}°C, Humidity: {humidity}%")
         print(f"Published: Temp: {temperature_c:.1f}°C, Humidity: {humidity}%")
         time.sleep(2.0)
@@ -142,6 +142,8 @@ return msg;
 
 
 UI Chart 노드: 수신한 데이터를 차트로 시각화하도록 설정합니다.
+
+
 4. 온도 및 습도 데이터 수집
 DHT11 센서에서 온도와 습도 데이터를 수집하는 코드를 사용하여 Node-RED로 데이터를 전송합니다. 이를 위해 앞서 작성한 MQTT 예제 코드나 HTTP 요청을 사용할 수 있습니다.
 
@@ -150,7 +152,7 @@ DHT11 센서에서 온도와 습도 데이터를 수집하는 코드를 사용�
 
 import paho.mqtt.client as mqtt
 
-broker = "mqtt.eclipse.org"  # MQTT 브로커 주소
+broker = "mqtt.eclipse.org" 
 topic = "sensor/dht11"
 
 mqtt_client = mqtt.Client()
